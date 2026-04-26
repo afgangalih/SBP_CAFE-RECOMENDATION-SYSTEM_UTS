@@ -1,5 +1,12 @@
 
+# OS Generated Files
+.DS_Store
+Thumbs.db
 
+# IDE & Code Editors
+.vscode/
+.idea/
 
-# skill sh
+# AI & Third-Party Tools
 .agents/
+skills-lock.json
