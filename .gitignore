@@ -7,6 +7,6 @@ Thumbs.db
 .vscode/
 .idea/
 
-# AI & Third-Party Tools
+
 .agents/
 skills-lock.json

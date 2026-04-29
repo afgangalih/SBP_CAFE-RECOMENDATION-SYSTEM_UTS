@@ -2,6 +2,7 @@ import pandas as pd
 from methods.preprocess import preprocess_data
 from methods.saw import calculate_saw
 from methods.filter import filter_data
+from methods.explain import attach_explanations
 
 
 # =========================
@@ -44,12 +45,28 @@ def run_scenario(name, filters):
         print("tidak ada data lolos filter ❌")
         return
 
-    # saw
+    # =========================
+    # SAW
+    # =========================
     result = calculate_saw(filtered)
 
-    print("top 5 hasil:")
-    for r in result["results"][:5]:
-        print(r)
+    # =========================
+    # EXPLAIN (tambahan)
+    # =========================
+    final_result = attach_explanations(result, filtered)
+
+    # =========================
+    # OUTPUT TEST
+    # =========================
+    print("top 3 hasil + alasan:")
+
+    for r in final_result[:3]:
+        print("\n---------------------")
+        print("nama :", r["nama"])
+        print("score:", r["score"])
+        print("alasan:")
+        for a in r["alasan"]:
+            print("-", a)
 
 
 # =========================
@@ -78,7 +95,7 @@ run_scenario("fasilitas tinggi", {
     "min_fasilitas": 10
 })
 
-# 5. super dekat (edge case)
+# 5. super dekat
 run_scenario("super dekat", {
     "max_jarak": 0.5
 })
@@ -88,7 +105,7 @@ run_scenario("murah saja", {
     "max_harga": 20000
 })
 
-# 7. filter ketat (kemungkinan kosong)
+# 7. filter ketat
 run_scenario("filter ketat", {
     "max_jarak": 0.3,
     "max_harga": 15000,

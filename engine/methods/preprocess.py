@@ -42,10 +42,16 @@ def parse_price_range(price_str):
     numbers = clean_numeric_list(numbers)
 
     if len(numbers) == 1:
-        return float(numbers[0])
+        value = float(numbers[0])
+        if value < 1000:
+            value = value * 1000
+        return value
 
     if len(numbers) >= 2:
-        return float((numbers[0] + numbers[1]) / 2)
+        value = (numbers[0] + numbers[1]) / 2
+        if value < 1000:
+            value = value * 1000
+        return float(value)
 
     return 0.0
 
@@ -147,7 +153,6 @@ def preprocess_data(data):
     for row in data:
         nama = str(row.get("Nama")).strip()
 
-        # handle duplikat
         if nama in seen:
             continue
         seen.add(nama)
@@ -155,7 +160,6 @@ def preprocess_data(data):
         harga = parse_price_range(row.get("Harga Menu"))
         jarak = parse_distance(row.get("Jarak"))
 
-        # validasi penting
         if harga <= 0 or jarak <= 0:
             continue
 
