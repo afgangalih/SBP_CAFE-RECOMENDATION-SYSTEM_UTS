@@ -8,9 +8,7 @@
     <div class="max-w-7xl mx-auto px-4 md:px-8 pt-10 md:pt-16">
         
         <div class="mb-12 relative">
-            <a href="{{ route('user.cafe.index') }}" class="inline-flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 hover:text-[#b87c39] transition-colors">
-                <i class="fa-solid fa-arrow-left"></i> Kembali ke Discovery
-            </a>
+            <x-ui.user-back-button :href="route('user.cafe.index')" class="mb-4" />
             <h1 class="text-3xl md:text-4xl font-black text-gray-900 tracking-tight mb-2">{{ $title }}</h1>
             <p class="text-gray-500 font-medium">Menampilkan hasil pencarian berdasarkan kurasi otomatis kami.</p>
         </div>
