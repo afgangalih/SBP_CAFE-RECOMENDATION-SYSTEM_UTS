@@ -19,16 +19,19 @@ class CafeController extends Controller
 
             switch ($category) {
                 case 'terdekat':
-                    $query->orderBy('jarak', 'asc');
-                    $title = "Kafe Terdekat dari Kampus";
+                    $query->where('jarak', '<=', 1.5)
+                          ->orderBy('jarak', 'asc');
+                    $title = "Dekat dari Kampus (< 1.5km)";
                     break;
                 case 'fasilitas':
-                    $query->orderBy('fasilitas_count', 'desc');
-                    $title = "Fasilitas Paling Sultan";
+                    $query->having('fasilitas_count', '>=', 9)
+                          ->orderBy('fasilitas_count', 'desc');
+                    $title = "Fasilitas Paling Sultan (9+ Fasilitas)";
                     break;
                 case 'menu':
-                    $query->orderBy('menus_count', 'desc');
-                    $title = "Variasi Menu Terbanyak";
+                    $query->having('menus_count', '>=', 6)
+                          ->orderBy('menus_count', 'desc');
+                    $title = "Variasi Menu Terbanyak (6+ Jenis)";
                     break;
                 case '24jam':
                     $query->where('jam_buka', '00:00')
@@ -40,16 +43,27 @@ class CafeController extends Controller
                     $title = "Semua Kafe";
             }
 
-            $cafes = $query->paginate(12);
+            $cafes = $query->paginate(12)->withQueryString();
             $allFasilitas = \App\Models\FasilitasModel::all();
             $allMenus = \App\Models\MenuModel::all();
             return view('pages.user.list-cafe', compact('cafes', 'title', 'allFasilitas', 'allMenus'));
         }
 
         
-        $terdekat = KafeModel::with(['menus', 'gambar', 'fasilitas'])->orderBy('jarak', 'asc')->take(3)->get();
-        $sultan = KafeModel::with(['menus', 'gambar', 'fasilitas'])->withCount('fasilitas')->orderBy('fasilitas_count', 'desc')->take(3)->get();
-        $menuLengkap = KafeModel::with(['menus', 'gambar', 'fasilitas'])->withCount('menus')->orderBy('menus_count', 'desc')->take(3)->get();
+        $terdekat = KafeModel::with(['menus', 'gambar', 'fasilitas'])
+            ->where('jarak', '<=', 1.5)
+            ->orderBy('jarak', 'asc')
+            ->take(3)->get();
+        $sultan = KafeModel::with(['menus', 'gambar', 'fasilitas'])
+            ->withCount('fasilitas')
+            ->having('fasilitas_count', '>=', 9)
+            ->orderBy('fasilitas_count', 'desc')
+            ->take(3)->get();
+        $menuLengkap = KafeModel::with(['menus', 'gambar', 'fasilitas'])
+            ->withCount('menus')
+            ->having('menus_count', '>=', 6)
+            ->orderBy('menus_count', 'desc')
+            ->take(3)->get();
         $buka24jam = KafeModel::with(['menus', 'gambar', 'fasilitas'])
             ->where('jam_buka', '00:00')
             ->where('jam_tutup', '23:59')
