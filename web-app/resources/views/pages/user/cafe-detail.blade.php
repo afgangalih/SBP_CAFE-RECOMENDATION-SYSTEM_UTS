@@ -5,6 +5,7 @@
 @section('content')
 
     <section class="max-w-7xl mx-auto px-4 md:px-8 pt-6">
+        <x-ui.user-back-button class="mb-6" />
         @php
             $images = $cafe->gambar->pluck('link_gambar')->toArray();
             $count = count($images);
@@ -111,7 +112,9 @@
         </button>
     </div>
 
-    <section class="max-w-7xl mx-auto px-4 md:px-8 pt-8">
+    <section class="max-w-7xl mx-auto px-4 md:px-8 pt-8 md:pt-12">
+
+
         <div class="flex flex-col lg:flex-row gap-10">
 
             <div class="flex-1">
@@ -342,7 +345,7 @@
         @else
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 @foreach($rekomendasi as $k)
-                    @include('components.cards.cafe-card', ['k' => $k])
+                    @include('components.ui.user-cafe-card', ['k' => $k])
                 @endforeach
             </div>
 

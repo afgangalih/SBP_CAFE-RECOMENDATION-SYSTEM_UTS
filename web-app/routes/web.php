@@ -13,6 +13,8 @@ Route::name('user.')->group(function () {
     Route::get('/', function () { return view('welcome'); })->name('home');
 
     Route::prefix('cafe')->name('cafe.')->group(function () {
+        Route::get('/explore', [CafeController::class, 'index'])->name('index');
+        Route::get('/search-api', [CafeController::class, 'searchApi'])->name('search.api');
         Route::get('/{id}', [CafeController::class, 'show'])->name('detail');
     });
 
