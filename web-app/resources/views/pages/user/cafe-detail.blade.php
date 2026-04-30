@@ -342,7 +342,7 @@
         @else
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                 @foreach($rekomendasi as $k)
-                    @include('components.cards.cafe-card', ['k' => $k])
+                    @include('components.ui.user-cafe-card', ['k' => $k])
                 @endforeach
             </div>
 

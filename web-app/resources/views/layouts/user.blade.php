@@ -23,19 +23,20 @@
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <style>
         body { font-family: 'Inter', sans-serif; }
     </style>
 </head>
 <body class="min-h-screen bg-[#fcfcfc] text-gray-800 font-sans">
 
-    @include('components.layout.user.navbar')
+    @include('components.global.user.navbar')
  
      <main class="pb-20">
          @yield('content')
      </main>
  
-     @include('components.layout.user.footer')
+     @include('components.global.user.footer')
 
     @stack('scripts')
 </body>
